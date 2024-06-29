@@ -15,23 +15,17 @@ This project provides a set of tools for daily work with `GDScript`. At the mome
 To install this project you need `python3` and `pip`.
 Regardless of the target version, installation is done by `pip3` command and for stable releases, it downloads the package from PyPI.
 
-### Godot 4
+### `master` (latest), works for Godot 4
 
+Latest version (potentially unstable) can be installed directly from git:
 ```
-pip3 install "gdtoolkit==4.*"
+pip3 install git+gdformat --diff C:\Users\denni\Desktop\code\cofe-broz
 ```
 
 ### Godot 3
 
 ```
 pip3 install "gdtoolkit==3.*"
-```
-
-### `master` (latest)
-
-Latest version (potentially unstable) can be installed directly from git:
-```
-pip3 install git+https://github.com/Scony/godot-gdscript-toolkit.git
 ```
 
 ## Linting with gdlint [(more)](https://github.com/Scony/godot-gdscript-toolkit/wiki/3.-Linter)
