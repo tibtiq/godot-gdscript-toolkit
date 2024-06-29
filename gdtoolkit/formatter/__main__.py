@@ -14,6 +14,8 @@ Options:
   -d --diff                  Don't write the files back,
                              just suggest formatting changes
                              (implies --check).
+  -c --colored-diff          Apply colored output to diff output,
+                             (implies --diff).
   -f --fast                  Skip safety checks.
   -l --line-length=<int>     How many characters per line to allow.
                              [default: 100]
@@ -67,6 +69,9 @@ def main():
     if arguments["--dump-default-config"]:
         _dump_default_config()
 
+    if arguments["--colored-diff"]:
+        arguments["--diff"] = True
+
     if arguments["--diff"]:
         arguments["--check"] = True
 
@@ -91,7 +96,7 @@ def main():
         _format_stdin(line_length, spaces_for_indent, safety_checks)
     elif arguments["--check"]:
         _check_files_formatting(
-            files, line_length, spaces_for_indent, arguments["--diff"], safety_checks
+            files, line_length, spaces_for_indent, arguments["--diff"], arguments["--colored-diff"], safety_checks
         )
     else:
         _format_files(files, line_length, spaces_for_indent, safety_checks)
@@ -165,6 +170,7 @@ def _check_files_formatting(
     line_length: int,
     spaces_for_indent: Optional[int],
     print_diff: bool,
+    colored_diff: bool,
     safety_checks: bool,
 ) -> None:
     formattable_files = set()
@@ -186,7 +192,8 @@ def _check_files_formatting(
                             file_path,
                             lineterm="",
                         )
-                        diff = color_diff(diff)
+                        if colored_diff:
+                            diff = color_diff(diff)
                         print(
                             "\n".join(diff),
                             file=sys.stderr,
