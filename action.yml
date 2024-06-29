@@ -26,10 +26,20 @@ runs:
         python-version: "3.x"
         cache: "pip"
 
-    - id: upgrade-setuptools
-      run: pip install --upgrade setuptools
+    - id: setup-build-tools
+      run: pip install build
       shell: bash
 
-    - id: install-gdtoolkit
-      run: pip install gdtoolkit==${{inputs.version}}
+    - name: checkout
+      uses: actions/checkout@v4.1.1
+      with:
+        fetch-depth: 0
+        repository: tibtiq/godot-gdscript-toolkit
+
+    - id: build-library
+      run: python -m build
+      shell: bash
+
+    - name: install-library
+      run: pip install ./dist/gdtoolkit-4.2.3-py3-none-any.whl
       shell: bash
