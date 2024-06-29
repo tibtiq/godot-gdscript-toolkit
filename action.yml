@@ -35,13 +35,16 @@ runs:
       with:
         fetch-depth: 0
         repository: tibtiq/godot-gdscript-toolkit
-        path:  ${{ runner.temp }}/gdot-gdscript-toolkit
+        path: godot-gdscript-toolkit
 
     - id: build-library
-      run: python -m build  ${{ runner.temp }}/gdot-gdscript-toolkit
-
+      run: python -m build godot-gdscript-toolkit
       shell: bash
 
     - name: install-library
-      run: pip install  ${{ runner.temp }}/gdot-gdscript-toolkit/dist/gdtoolkit-4.2.3-py3-none-any.whl
+      run: pip install godot-gdscript-toolkit/dist/gdtoolkit-4.2.3-py3-none-any.whl
+      shell: bash
+
+    - name: clean-up
+      run: rm -rf godot-gdscript-toolkit
       shell: bash
