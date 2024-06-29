@@ -35,6 +35,7 @@ from types import MappingProxyType
 import pkg_resources
 
 from docopt import docopt
+import colorama
 import lark
 import yaml
 
@@ -178,16 +179,16 @@ def _check_files_formatting(
                 if success and actually_formatted:
                     print(f"would reformat {file_path}", file=sys.stderr)
                     if print_diff:
+                        diff = difflib.unified_diff(
+                            code.splitlines(),
+                            formatted_code.splitlines(),
+                            file_path,
+                            file_path,
+                            lineterm="",
+                        )
+                        diff = color_diff(diff)
                         print(
-                            "\n".join(
-                                difflib.unified_diff(
-                                    code.splitlines(),
-                                    formatted_code.splitlines(),
-                                    file_path,
-                                    file_path,
-                                    lineterm="",
-                                )
-                            ),
+                            "\n".join(diff),
                             file=sys.stderr,
                         )
                     formattable_files.add(file_path)
@@ -333,6 +334,22 @@ def _format_code(
             file=sys.stderr,
         )
     return success, actually_formatted, formatted_code
+
+
+def color_diff(diff: str):
+    """Color difflib results
+
+    https://chezsoi.org/lucas/blog/colored-diff-output-with-python.html
+    """
+    for line in diff:
+        if line.startswith('+'):
+            yield colorama.Fore.GREEN + line + colorama.Fore.RESET
+        elif line.startswith('-'):
+            yield colorama.Fore.RED + line + colorama.Fore.RESET
+        elif line.startswith('^'):
+            yield colorama.Fore.BLUE + line + colorama.Fore.RESET
+        else:
+            yield line
 
 
 if __name__ == "__main__":
