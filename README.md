@@ -1,4 +1,5 @@
 # GDScript Toolkit
+
 [![](https://github.com/Scony/godot-gdscript-toolkit/workflows/Tests/badge.svg?branch=master)](https://github.com/Scony/godot-gdscript-toolkit/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
@@ -18,8 +19,9 @@ Regardless of the target version, installation is done by `pip3` command and for
 ### `master` (latest), works for Godot 4
 
 Latest version (potentially unstable) can be installed directly from git:
+
 ```
-pip3 install git+gdformat --diff C:\Users\denni\Desktop\code\cofe-broz
+pip3 install "gdtoolkit==4.*"
 ```
 
 ### Godot 3
@@ -115,6 +117,7 @@ gdradon cc tests/formatter/input-output-pairs/simple-function-statements.in.gd t
 ```
 
 The command outputs calculated metrics just like [Radon cc command](https://radon.readthedocs.io/en/latest/commandline.html#the-cc-command) does for Python code:
+
 ```
 tests/formatter/input-output-pairs/simple-function-statements.in.gd
     C 1:0 X - A (2)
